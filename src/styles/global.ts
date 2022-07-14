@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
 
   :focus {
     outline: 0;
-    box-shadow: 0 0 0 2px ${({ theme: { colors } }) => colors.purple};
+    box-shadow: 0 0 0 2px ${({ theme: { colors } }) => colors['yellow-dark']};
   }
 
   body {
