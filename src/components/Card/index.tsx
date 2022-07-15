@@ -1,8 +1,12 @@
 import { ShoppingCart, Minus, Plus } from 'phosphor-react'
+import { useState } from 'react'
+import { useCart } from '../../store/contexts/CartContex'
+import { formatCurrency } from '../../utils/formatCurrency'
 
 import * as S from './styles'
 
 interface ICardProps {
+  id: string
   title: string
   about: string
   price: number
@@ -11,16 +15,36 @@ interface ICardProps {
 }
 
 export const Card = ({
+  id,
   title,
   about,
   price,
   imgUrl,
   tags
 }: ICardProps) => {
-  const priceFormatted = new Intl.NumberFormat('pt-BR', {
-    currency: 'BRL',
-    minimumFractionDigits: 2
-  }).format(price)
+  const [coffeeQuantity, setCoffeeQuantity] = useState(0)
+
+  const { addToCart } = useCart()
+
+  const handleAddCoffeeQuantity = () => {
+    setCoffeeQuantity(prev => prev + 1)
+  }
+
+  const handleSubCoffeeQuantity = () => {
+    if (coffeeQuantity === 0) return
+
+    setCoffeeQuantity(prev => prev - 1)
+  }
+
+  const handleAddCoffeeToCart = () => {
+    addToCart({
+      id,
+      title,
+      imgUrl,
+      price,
+      quantity: coffeeQuantity,
+    })
+  }
   
   return (
     <S.CardContainer>
@@ -39,19 +63,19 @@ export const Card = ({
       <S.Footer>
         <S.PriceWrapper>
           <S.Currency>R${" "}</S.Currency>
-          <S.Price>{priceFormatted}</S.Price>
+          <S.Price>{formatCurrency(price)}</S.Price>
         </S.PriceWrapper>
         <S.Actions>
           <S.CounterWrapper>
-            <button>
+            <button onClick={handleSubCoffeeQuantity}>
               <Minus size={14} />
             </button>
-            <span>1</span>
-            <button>
+            <span>{coffeeQuantity}</span>
+            <button onClick={handleAddCoffeeQuantity}>
               <Plus size={14} />
             </button>
           </S.CounterWrapper>
-          <S.IconWrapper>
+          <S.IconWrapper onClick={handleAddCoffeeToCart}>
             <ShoppingCart size={22} weight='fill' />
           </S.IconWrapper>
         </S.Actions>

@@ -105,7 +105,7 @@ export const CounterWrapper = styled.div`
   }
 `
 
-export const IconWrapper = styled.div`
+export const IconWrapper = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,6 +114,7 @@ export const IconWrapper = styled.div`
   color: ${({ theme: { colors } }) => colors.white};
   padding: 8px;
   cursor: pointer;
+  border: 0;
   transition: background-color .3s ease;
   
   &:hover {
