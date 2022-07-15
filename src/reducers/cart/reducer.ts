@@ -61,6 +61,24 @@ export const cartReducer = (state: ICartState, action: any) => {
           draft.cart.totalPrice -= totalCoffeePrice
         }
       })
+    case ActionTypes.ADD_COFFEE_FROM_CHECKOUT:
+      return produce(state, (draft) => {
+        const coffee = draft.cart.coffees.find((coffee) => coffee.id === action.payload.coffeeId)
+
+        coffee!.quantity += 1
+        draft.cart.totalCoffees += coffee!.price
+        draft.cart.totalPrice += coffee!.price
+      })
+    case ActionTypes.SUBTRACT_COFFEE_FROM_CHECKOUT:
+      return produce(state, (draft) => {
+        const coffee = draft.cart.coffees.find((coffee) => coffee.id === action.payload.coffeeId)
+
+        if (coffee!.quantity === 1) return
+
+        coffee!.quantity -= 1
+        draft.cart.totalCoffees -= coffee!.price
+        draft.cart.totalPrice -= coffee!.price
+      })
     default:
       return state
   }
