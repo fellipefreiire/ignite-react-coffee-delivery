@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.3;
   }
 
-  :focus {
+  input:focus {
     outline: 0;
     box-shadow: 0 0 0 2px ${({ theme: { colors } }) => colors['yellow-dark']};
   }
