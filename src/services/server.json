@@ -5,7 +5,7 @@
       "title": "Expresso Tradicional",
       "about": "O tradicional café feito com água quente e grãos moídos",
       "price": 9.90,
-      "imgUrl": "/public/coffees/tradicional.png",
+      "imgUrl": "/coffees/tradicional.png",
       "tags": [
         "tradicional"
       ]
@@ -15,7 +15,7 @@
       "title": "Expresso Americano",
       "about": "Expresso diluído, menos intenso que o tradicional",
       "price": 9.90,
-      "imgUrl": "/public/coffees/americano.png",
+      "imgUrl": "/coffees/americano.png",
       "tags": [
         "tradicional"
       ]
@@ -25,7 +25,7 @@
       "title": "Expresso Cremoso",
       "about": "Café expresso tradicional com espuma cremosa",
       "price": 9.90,
-      "imgUrl": "/public/coffees/expresso-cremoso.png",
+      "imgUrl": "/coffees/expresso-cremoso.png",
       "tags": [
         "tradicional"
       ]
@@ -35,7 +35,7 @@
       "title": "Expresso Gelado",
       "about": "Bebida preparada com café expresso e cubos de gelo",
       "price": 9.90,
-      "imgUrl": "/public/coffees/cafe-gelado.png",
+      "imgUrl": "/coffees/cafe-gelado.png",
       "tags": [
         "tradicional",
         "gelado"
@@ -46,7 +46,7 @@
       "title": "Café com Leite",
       "about": "Meio a meio de expresso tradicional com leite vaporizado",
       "price": 9.90,
-      "imgUrl": "/public/coffees/cafe-com-leite.png",
+      "imgUrl": "/coffees/cafe-com-leite.png",
       "tags": [
         "tradicional",
         "com leite"
@@ -57,7 +57,7 @@
       "title": "Latte",
       "about": "Uma dose de café expresso com o dobro de leite e espuma cremosa",
       "price": 9.90,
-      "imgUrl": "/public/coffees/latte.png",
+      "imgUrl": "/coffees/latte.png",
       "tags": [
         "tradicional",
         "com leite"
@@ -68,7 +68,7 @@
       "title": "Capuccino",
       "about": "Bebida com canela feita de doses iguais de café, leite e espuma",
       "price": 9.90,
-      "imgUrl": "/public/coffees/capuccino.png",
+      "imgUrl": "/coffees/capuccino.png",
       "tags": [
         "tradicional",
         "com leite"
@@ -79,7 +79,7 @@
       "title": "Macchiato",
       "about": "Café expresso misturado com um pouco de leite quente e espuma",
       "price": 9.90,
-      "imgUrl": "/public/coffees/macchiato.png",
+      "imgUrl": "/coffees/macchiato.png",
       "tags": [
         "tradicional",
         "com leite"
@@ -90,7 +90,7 @@
       "title": "Mocaccino",
       "about": "Café expresso com calda de chocolate, pouco leite e espuma",
       "price": 9.90,
-      "imgUrl": "/public/coffees/mocaccino.png",
+      "imgUrl": "/coffees/mocaccino.png",
       "tags": [
         "tradicional",
         "com leite"
@@ -101,7 +101,7 @@
       "title": "Chocolate Quente",
       "about": "Bebida feita com chocolate dissolvido no leite quente e café",
       "price": 9.90,
-      "imgUrl": "/public/coffees/chocolate-quente.png",
+      "imgUrl": "/coffees/chocolate-quente.png",
       "tags": [
         "especial",
         "com leite"
@@ -112,7 +112,7 @@
       "title": "Cubano",
       "about": "Drink gelado de café expresso com rum, creme de leite e hortelã",
       "price": 9.90,
-      "imgUrl": "/public/coffees/cubano.png",
+      "imgUrl": "/coffees/cubano.png",
       "tags": [
         "especial",
         "alcoólico",
@@ -124,7 +124,7 @@
       "title": "Havaiano",
       "about": "Bebida adocicada preparada com café e leite de coco",
       "price": 9.90,
-      "imgUrl": "/public/coffees/havaiano.png",
+      "imgUrl": "/coffees/havaiano.png",
       "tags": [
         "especial"
       ]
@@ -134,7 +134,7 @@
       "title": "Árabe",
       "about": "Bebida preparada com grãos de café árabe e especiarias",
       "price": 9.90,
-      "imgUrl": "/public/coffees/arabe.png",
+      "imgUrl": "/coffees/arabe.png",
       "tags": [
         "especial"
       ]
@@ -144,7 +144,7 @@
       "title": "Irlandês",
       "about": "Bebida a base de café, uísque irlandês, açúcar e chantilly",
       "price": 9.90,
-      "imgUrl": "/public/coffees/irlandes.png",
+      "imgUrl": "/coffees/irlandes.png",
       "tags": [
         "especial",
         "alcoólico"
