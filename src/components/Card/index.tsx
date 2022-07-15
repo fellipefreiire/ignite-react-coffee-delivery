@@ -37,6 +37,8 @@ export const Card = ({
   }
 
   const handleAddCoffeeToCart = () => {
+    if(coffeeQuantity === 0) return
+
     addToCart({
       id,
       title,
@@ -44,6 +46,8 @@ export const Card = ({
       price,
       quantity: coffeeQuantity,
     })
+    
+    setCoffeeQuantity(0)
   }
   
   return (
