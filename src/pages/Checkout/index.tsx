@@ -1,7 +1,15 @@
 import { Bank, CreditCard, CurrencyDollarSimple, MapPinLine, Minus, Money, Plus, Trash } from 'phosphor-react'
+import { useCart } from '../../store/contexts/CartContex'
+import { formatCurrency } from '../../utils/formatCurrency'
 import * as S from './styles'
 
 export const Checkout = () => {
+  const { cart, removeFromCart } = useCart()
+
+  const handleRemoveCoffeeFromCart = (coffeeId: string) => {
+    removeFromCart(coffeeId)
+  }
+
   return (
     <S.CheckoutContainer>
       <form>
@@ -63,68 +71,46 @@ export const Checkout = () => {
         <S.SelectedCoffees>
           <h1>Cafés selecionados</h1>
           <S.ConfirmRequest>
-            <S.SelectedCoffeeCard>
-              <img src="/public/coffees/tradicional.png" alt="" />
-              <S.CounterWrapper>
-                <S.CoffeeTitle>Expresso Tradicional</S.CoffeeTitle>
-                <S.Counter>
-                  <div>
-                    <button>
-                      <Minus size={14} />
+            {cart.coffees.map((coffee) => (
+              <S.SelectedCoffeeCard key={coffee.id}>
+                <img src={coffee.imgUrl} alt="" />
+                <S.CounterWrapper>
+                  <S.CoffeeTitle>{coffee.title}</S.CoffeeTitle>
+                  <S.Counter>
+                    <div>
+                      <button type='button'>
+                        <Minus size={14} />
+                      </button>
+                      <span>{coffee.quantity}</span>
+                      <button type='button'>
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                    <button type='button' onClick={() => handleRemoveCoffeeFromCart(coffee.id)}>
+                      <Trash size={16} />
+                      <span>Remover</span>
                     </button>
-                    <span>1</span>
-                    <button>
-                      <Plus size={14} />
-                    </button>
-                  </div>
-                  <button>
-                    <Trash size={16} />
-                    <span>Remover</span>
-                  </button>
-                </S.Counter>
-              </S.CounterWrapper>
-              <S.PriceWrapper>
-                <S.Price>R$ 9,90</S.Price>
-              </S.PriceWrapper>
-            </S.SelectedCoffeeCard>
-
-            <S.SelectedCoffeeCard>
-              <img src="/public/coffees/latte.png" alt="" />
-              <S.CounterWrapper>
-                <S.CoffeeTitle>Latte</S.CoffeeTitle>
-                <S.Counter>
-                  <div>
-                    <button>
-                      <Minus size={14} />
-                    </button>
-                    <span>1</span>
-                    <button>
-                      <Plus size={14} />
-                    </button>
-                  </div>
-                  <button>
-                    <Trash size={16} />
-                    <span>Remover</span>
-                  </button>
-                </S.Counter>
-              </S.CounterWrapper>
-              <S.PriceWrapper>
-                <S.Price>R$ 19,80</S.Price>
-              </S.PriceWrapper>
-            </S.SelectedCoffeeCard>
+                  </S.Counter>
+                </S.CounterWrapper>
+                <S.PriceWrapper>
+                  <S.Price>R$ {formatCurrency(coffee.price)}</S.Price>
+                </S.PriceWrapper>
+              </S.SelectedCoffeeCard>
+            )
+            )}
 
             <S.BillWrapper>
               <S.CostWrapper>
                 <span>Total de itens</span>
-                <span>R$ 29,70</span>
+                <span>R$ {formatCurrency(cart.totalCoffees)}</span>
               </S.CostWrapper>
               <S.CostWrapper>
                 <span>Entrega</span>
-                <span>R$ 3,50</span>
+                <span>R$ {formatCurrency(cart.deliveryCost)}</span>
               </S.CostWrapper>
               <S.TotalCostWrapper>
                 <span>Total</span>
-                <span>R$ 33,20</span>
+                <span>R$ {formatCurrency(cart.totalPrice)}</span>
               </S.TotalCostWrapper>
             </S.BillWrapper>
 
