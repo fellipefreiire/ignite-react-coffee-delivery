@@ -4,10 +4,18 @@ import { formatCurrency } from '../../utils/formatCurrency'
 import * as S from './styles'
 
 export const Checkout = () => {
-  const { cart, removeFromCart } = useCart()
+  const { cart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout } = useCart()
 
   const handleRemoveCoffeeFromCart = (coffeeId: string) => {
     removeFromCart(coffeeId)
+  }
+
+  const handleAddCoffeeQuantity = (coffeeId: string) => {
+    addCoffeeFromCheckout(coffeeId)
+  }
+
+  const handleSubtractCoffeeQuantity = (coffeeId: string) => {
+    subtractCofeeFromCheckout(coffeeId)
   }
 
   return (
@@ -78,11 +86,11 @@ export const Checkout = () => {
                   <S.CoffeeTitle>{coffee.title}</S.CoffeeTitle>
                   <S.Counter>
                     <div>
-                      <button type='button'>
+                      <button type='button' onClick={() => handleSubtractCoffeeQuantity(coffee.id)}>
                         <Minus size={14} />
                       </button>
                       <span>{coffee.quantity}</span>
-                      <button type='button'>
+                      <button type='button' onClick={() => handleAddCoffeeQuantity(coffee.id)}>
                         <Plus size={14} />
                       </button>
                     </div>

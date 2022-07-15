@@ -145,6 +145,7 @@ export const ConfirmRequest = styled.div`
   gap: 24px;
   background-color: ${({ theme: { colors } }) => colors["base-card"]};
   padding: 40px;
+  min-width: 428px;
 `
 
 export const SelectedCoffeeCard = styled.div`
@@ -192,6 +193,7 @@ export const Counter = styled.div`
       align-items: center;
       border: 0;
       background-color: ${({ theme: { colors } }) => colors["base-button"]};
+      cursor: pointer;
     }
   }
 
@@ -207,6 +209,7 @@ export const Counter = styled.div`
     font: ${({ theme: { fonts } }) => fonts.components["button-s"]};
     text-transform: uppercase;
     border-radius: 6px;
+    cursor: pointer;
   }
 
   svg {
