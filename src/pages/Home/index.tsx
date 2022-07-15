@@ -88,6 +88,7 @@ export const Home = () => {
             {coffees?.map((coffee) => (
               <Card
                 key={coffee.id}
+                id={coffee.id}
                 title={coffee.title}
                 about={coffee.about}
                 imgUrl={coffee.imgUrl}
