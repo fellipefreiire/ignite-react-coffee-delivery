@@ -4,7 +4,7 @@
       "id": "1",
       "title": "Expresso Tradicional",
       "about": "O tradicional café feito com água quente e grãos moídos",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/tradicional.png",
       "tags": [
         "tradicional"
@@ -14,7 +14,7 @@
       "id": "2",
       "title": "Expresso Americano",
       "about": "Expresso diluído, menos intenso que o tradicional",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/americano.png",
       "tags": [
         "tradicional"
@@ -24,7 +24,7 @@
       "id": "3",
       "title": "Expresso Cremoso",
       "about": "Café expresso tradicional com espuma cremosa",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/expresso-cremoso.png",
       "tags": [
         "tradicional"
@@ -34,7 +34,7 @@
       "id": "4",
       "title": "Expresso Gelado",
       "about": "Bebida preparada com café expresso e cubos de gelo",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/cafe-gelado.png",
       "tags": [
         "tradicional",
@@ -45,7 +45,7 @@
       "id": "5",
       "title": "Café com Leite",
       "about": "Meio a meio de expresso tradicional com leite vaporizado",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/cafe-com-leite.png",
       "tags": [
         "tradicional",
@@ -56,7 +56,7 @@
       "id": "6",
       "title": "Latte",
       "about": "Uma dose de café expresso com o dobro de leite e espuma cremosa",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/latte.png",
       "tags": [
         "tradicional",
@@ -67,7 +67,7 @@
       "id": "7",
       "title": "Capuccino",
       "about": "Bebida com canela feita de doses iguais de café, leite e espuma",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/capuccino.png",
       "tags": [
         "tradicional",
@@ -78,7 +78,7 @@
       "id": "8",
       "title": "Macchiato",
       "about": "Café expresso misturado com um pouco de leite quente e espuma",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/macchiato.png",
       "tags": [
         "tradicional",
@@ -89,7 +89,7 @@
       "id": "9",
       "title": "Mocaccino",
       "about": "Café expresso com calda de chocolate, pouco leite e espuma",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/mocaccino.png",
       "tags": [
         "tradicional",
@@ -100,7 +100,7 @@
       "id": "10",
       "title": "Chocolate Quente",
       "about": "Bebida feita com chocolate dissolvido no leite quente e café",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/chocolate-quente.png",
       "tags": [
         "especial",
@@ -111,7 +111,7 @@
       "id": "11",
       "title": "Cubano",
       "about": "Drink gelado de café expresso com rum, creme de leite e hortelã",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/cubano.png",
       "tags": [
         "especial",
@@ -123,7 +123,7 @@
       "id": "12",
       "title": "Havaiano",
       "about": "Bebida adocicada preparada com café e leite de coco",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/havaiano.png",
       "tags": [
         "especial"
@@ -133,7 +133,7 @@
       "id": "13",
       "title": "Árabe",
       "about": "Bebida preparada com grãos de café árabe e especiarias",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/arabe.png",
       "tags": [
         "especial"
@@ -143,12 +143,95 @@
       "id": "14",
       "title": "Irlandês",
       "about": "Bebida a base de café, uísque irlandês, açúcar e chantilly",
-      "price": 9.90,
+      "price": 9.9,
       "imgUrl": "/coffees/irlandes.png",
       "tags": [
         "especial",
         "alcoólico"
       ]
+    }
+  ],
+  "requests": [
+    {
+      "id": 1658010746179,
+      "coffees": [
+        {
+          "id": "2",
+          "title": "Expresso Americano",
+          "price": 9.9,
+          "quantity": 3
+        }
+      ],
+      "address": {
+        "cep": 55555555,
+        "rua": "aa",
+        "numero": "a",
+        "complemento": "a",
+        "bairro": "a",
+        "cidade": "a",
+        "uf": "aa"
+      },
+      "totalCoffees": 29.7,
+      "deliveryCost": 3.5,
+      "totalPrice": 33.2,
+      "paymentMethod": "credito",
+      "purchasedDate": "2022-07-16T22:32:26.179Z"
+    },
+    {
+      "id": 1658010777509,
+      "coffees": [
+        {
+          "id": "3",
+          "title": "Expresso Cremoso",
+          "price": 9.9,
+          "quantity": 2
+        }
+      ],
+      "address": {
+        "cep": 55555555,
+        "rua": "a",
+        "numero": "a",
+        "complemento": "a",
+        "bairro": "a",
+        "cidade": "a",
+        "uf": "aa"
+      },
+      "totalCoffees": 19.8,
+      "deliveryCost": 3.5,
+      "totalPrice": 23.3,
+      "paymentMethod": "debito",
+      "purchasedDate": "2022-07-16T22:32:57.509Z"
+    },
+    {
+      "id": 1658010822147,
+      "coffees": [
+        {
+          "id": "7",
+          "title": "Capuccino",
+          "price": 9.9,
+          "quantity": 3
+        },
+        {
+          "id": "8",
+          "title": "Macchiato",
+          "price": 9.9,
+          "quantity": 3
+        }
+      ],
+      "address": {
+        "cep": 55555554,
+        "rua": "a",
+        "numero": "a",
+        "complemento": "a",
+        "bairro": "a",
+        "cidade": "a",
+        "uf": "aa"
+      },
+      "totalCoffees": 59.4,
+      "deliveryCost": 3.5,
+      "totalPrice": 62.9,
+      "paymentMethod": "dinheiro",
+      "purchasedDate": "2022-07-16T22:33:42.147Z"
     }
   ]
 }
