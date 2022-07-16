@@ -1,10 +1,31 @@
 import { Bank, CreditCard, CurrencyDollarSimple, MapPinLine, Minus, Money, Plus, Trash } from 'phosphor-react'
+import { useState } from 'react'
+import { useForm, useFormContext } from 'react-hook-form'
 import { useCart } from '../../store/contexts/CartContex'
 import { formatCurrency } from '../../utils/formatCurrency'
+import * as zod from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import * as S from './styles'
+import { useNavigate } from 'react-router-dom'
+
+const cartFormValidationSchema = zod.object({
+  cep: zod.number().min(8, 'Informe a tarefa'),
+  rua: zod.string().min(1, 'Informe a tarefa'),
+  numero: zod.string().min(1, 'Informe a tarefa'),
+  complemento: zod.string().min(1, 'Informe a tarefa'),
+  bairro: zod.string().min(1, 'Informe a tarefa'),
+  cidade: zod.string().min(1, 'Informe a tarefa'),
+  uf: zod.string().min(2, 'Informe a tarefa'),
+})
+
+type CartFormData = zod.infer<typeof cartFormValidationSchema>
 
 export const Checkout = () => {
-  const { cart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout } = useCart()
+  const [paymentMethod, setPaymentMethod] = useState('')
+  const navigate = useNavigate()
+
+  const { cart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout, submitRequest } = useCart()
 
   const handleRemoveCoffeeFromCart = (coffeeId: string) => {
     removeFromCart(coffeeId)
@@ -18,10 +39,51 @@ export const Checkout = () => {
     subtractCofeeFromCheckout(coffeeId)
   }
 
+  const cartForm = useForm<CartFormData>({
+    resolver: zodResolver(cartFormValidationSchema),
+    defaultValues: {
+      cep: undefined,
+      rua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cidade: '',
+      uf: '',
+    },
+  })
+
+  const { handleSubmit, register, watch, reset } = cartForm
+
+  const handleSumbitCart = (data: CartFormData) => {
+    const coffees = cart.coffees.map(coffee => {
+      return {
+        id: coffee.id,
+        title: coffee.title,
+        price: coffee.price,
+        quantity: coffee.quantity,
+      }
+    })
+
+    const request = {
+      id: new Date().getTime(),
+      coffees: coffees,
+      address: data,
+      totalCoffees: Number(cart.totalCoffees.toFixed(2)),
+      deliveryCost: Number(cart.deliveryCost.toFixed(2)),
+      totalPrice: Number(cart.totalPrice.toFixed(2)),
+      paymentMethod,
+      purchasedDate: new Date()
+    }
+
+
+    submitRequest(request)
+
+    navigate('/success')
+  }
+
   return (
     <S.CheckoutContainer>
-      <form>
-
+      <form onSubmit={handleSubmit(handleSumbitCart)}>
         <S.Request>
           <h1>Complete seu pedido</h1>
           <S.Address>
@@ -34,19 +96,54 @@ export const Checkout = () => {
             </S.AddressHeader>
             <S.AddressInputs>
               <div>
-                <input className='cnb' type="text" name='cep' placeholder='CEP' />
+                <input
+                  className='cnb'
+                  type="text"
+                  placeholder='CEP'
+                  {...register('cep', { valueAsNumber: true })}
+                />
               </div>
               <div>
-                <input className='full' type="text" name='rua' placeholder='Rua' />
+                <input
+                  className='full'
+                  type="text"
+                  placeholder='Rua'
+                  {...register('rua')}
+                />
               </div>
               <div>
-                <input className='cnb' type="text" name='numero' placeholder='Número' />
-                <input className='full' type="text" name='complemento' placeholder='Complemento' />
+                <input
+                  className='cnb'
+                  type="text"
+                  placeholder='Número'
+                  {...register('numero')}
+                />
+                <input
+                  className='full'
+                  type="text"
+                  placeholder='Complemento'
+                  {...register('complemento')}
+                />
               </div>
               <div>
-                <input className='cnb' type="text" name='bairro' placeholder='Bairro' />
-                <input className='full' type="text" name='cidade' placeholder='Cidade' />
-                <input className='uf' type="text" name='uf' placeholder='UF' />
+                <input
+                  className='cnb'
+                  type="text"
+                  placeholder='Bairro'
+                  {...register('bairro')}
+                />
+                <input
+                  className='full'
+                  type="text"
+                  placeholder='Cidade'
+                  {...register('cidade')}
+                />
+                <input
+                  className='uf'
+                  type="text"
+                  placeholder='UF'
+                  {...register('uf')}
+                />
               </div>
             </S.AddressInputs>
           </S.Address>
@@ -60,15 +157,27 @@ export const Checkout = () => {
               </div>
             </S.PaymentHeader>
             <S.PaymentWrapper>
-              <S.PaymentCard>
+              <S.PaymentCard
+                className={paymentMethod === 'credito' ? 'active' : ''}
+                onClick={() => setPaymentMethod('credito')}
+                type='button'
+              >
                 <CreditCard />
                 <span>Cartão de crédito</span>
               </S.PaymentCard>
-              <S.PaymentCard>
+              <S.PaymentCard
+                className={paymentMethod === 'debito' ? 'active' : ''}
+                onClick={() => setPaymentMethod('debito')}
+                type='button'
+              >
                 <Bank />
                 <span>Cartão de débito</span>
               </S.PaymentCard>
-              <S.PaymentCard>
+              <S.PaymentCard
+                className={paymentMethod === 'dinheiro' ? 'active' : ''}
+                onClick={() => setPaymentMethod('dinheiro')}
+                type='button'
+              >
                 <Money />
                 <span>Dinheiro</span>
               </S.PaymentCard>
@@ -122,7 +231,7 @@ export const Checkout = () => {
               </S.TotalCostWrapper>
             </S.BillWrapper>
 
-            <S.ConfirmPaymentButton>
+            <S.ConfirmPaymentButton type='submit'>
               Confirmar Pedido
             </S.ConfirmPaymentButton>
           </S.ConfirmRequest>

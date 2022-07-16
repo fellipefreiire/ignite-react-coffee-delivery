@@ -115,6 +115,7 @@ export const PaymentCard = styled.button`
   gap: 12px;
   padding: 16px;
   border: 0;
+  border-radius: 6px;
   background-color: ${({ theme: { colors } }) => colors["base-button"]};
   cursor: pointer;
   width: 180px;
@@ -127,6 +128,11 @@ export const PaymentCard = styled.button`
 
   svg {
     color: ${({ theme: { colors } }) => colors.purple};
+  }
+
+  &.active {
+    background-color: ${({ theme: { colors } }) => colors["purple-light"]};
+    border: 1px solid ${({ theme: { colors }}) => colors.purple};
   }
 `
 
@@ -257,4 +263,5 @@ export const ConfirmPaymentButton = styled.button`
   color: ${({ theme: { colors } }) => colors.white};
   font: ${({ theme: { fonts } }) => fonts.components["button-g"]};
   text-transform: uppercase;
+  cursor: pointer;
 `
