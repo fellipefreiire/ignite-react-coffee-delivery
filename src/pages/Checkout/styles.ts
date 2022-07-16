@@ -59,14 +59,14 @@ export const AddressInputs = styled.div`
 
   input {
     padding: 12px;
-    background-color: ${({ theme: { colors }}) => colors["base-input"]};
-    color: ${({ theme: { colors }}) => colors["base-text"]};
+    background-color: ${({ theme: { colors } }) => colors["base-input"]};
+    color: ${({ theme: { colors } }) => colors["base-text"]};
     border: 0;
     border-radius: 4px;
   }
   
   input::placeholder {
-    color: ${({ theme: { colors }}) => colors["base-label"]};
+    color: ${({ theme: { colors } }) => colors["base-label"]};
   }
 
   & .full {
@@ -79,6 +79,7 @@ export const AddressInputs = styled.div`
 
   & .uf {
     width: 60px;
+    text-transform: uppercase;
   }
 `
 
@@ -96,6 +97,10 @@ export const Payment = styled.div`
   padding: 40px;
   background-color: ${({ theme: { colors } }) => colors["base-card"]};
   border-radius: 6px;
+
+  &.error {
+    border: 1px solid red;
+  }
 `
 
 export const PaymentHeader = styled(BaseRequestHeader)`
@@ -132,7 +137,7 @@ export const PaymentCard = styled.button`
 
   &.active {
     background-color: ${({ theme: { colors } }) => colors["purple-light"]};
-    border: 1px solid ${({ theme: { colors }}) => colors.purple};
+    border: 1px solid ${({ theme: { colors } }) => colors.purple};
   }
 `
 

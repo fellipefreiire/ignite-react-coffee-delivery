@@ -11,7 +11,7 @@ export type Coffee = {
 }
 
 type Address = {
-  cep: number | undefined
+  cep: string
   rua: string
   numero: string
   complemento?: string

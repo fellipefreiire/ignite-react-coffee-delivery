@@ -10,19 +10,20 @@ import * as S from './styles'
 import { useNavigate } from 'react-router-dom'
 
 const cartFormValidationSchema = zod.object({
-  cep: zod.number().min(8, 'Informe a tarefa'),
-  rua: zod.string().min(1, 'Informe a tarefa'),
-  numero: zod.string().min(1, 'Informe a tarefa'),
-  complemento: zod.string().min(1, 'Informe a tarefa'),
-  bairro: zod.string().min(1, 'Informe a tarefa'),
-  cidade: zod.string().min(1, 'Informe a tarefa'),
-  uf: zod.string().min(2, 'Informe a tarefa'),
+  cep: zod.string().min(8, 'O CEP é obrigatório'),
+  rua: zod.string().min(1, 'A rua é obrigatória'),
+  numero: zod.string().min(1, 'O número é obrigatório'),
+  complemento: zod.string(),
+  bairro: zod.string().min(1, 'O bairro é obrigatório'),
+  cidade: zod.string().min(1, 'A cidade é obrigatória'),
+  uf: zod.string().min(2, 'A UF é obrigatória'),
 })
 
 type CartFormData = zod.infer<typeof cartFormValidationSchema>
 
 export const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState('')
+  const [paymentError, setPaymentError] = useState(false)
   const navigate = useNavigate()
 
   const { cart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout, submitRequest } = useCart()
@@ -42,7 +43,7 @@ export const Checkout = () => {
   const cartForm = useForm<CartFormData>({
     resolver: zodResolver(cartFormValidationSchema),
     defaultValues: {
-      cep: undefined,
+      cep: '',
       rua: '',
       numero: '',
       complemento: '',
@@ -55,30 +56,46 @@ export const Checkout = () => {
   const { handleSubmit, register, watch, reset } = cartForm
 
   const handleSumbitCart = (data: CartFormData) => {
-    const coffees = cart.coffees.map(coffee => {
-      return {
-        id: coffee.id,
-        title: coffee.title,
-        price: coffee.price,
-        quantity: coffee.quantity,
+    try {
+      if (paymentMethod === '') {
+        setPaymentError(true)
+        return
       }
-    })
+      const coffees = cart.coffees.map(coffee => {
+        return {
+          id: coffee.id,
+          title: coffee.title,
+          price: coffee.price,
+          quantity: coffee.quantity,
+        }
+      })
+  
+      const request = {
+        id: new Date().getTime(),
+        coffees: coffees,
+        address: data,
+        totalCoffees: Number(cart.totalCoffees.toFixed(2)),
+        deliveryCost: Number(cart.deliveryCost.toFixed(2)),
+        totalPrice: Number(cart.totalPrice.toFixed(2)),
+        paymentMethod,
+        purchasedDate: new Date()
+      }
+  
+      submitRequest(request)
 
-    const request = {
-      id: new Date().getTime(),
-      coffees: coffees,
-      address: data,
-      totalCoffees: Number(cart.totalCoffees.toFixed(2)),
-      deliveryCost: Number(cart.deliveryCost.toFixed(2)),
-      totalPrice: Number(cart.totalPrice.toFixed(2)),
-      paymentMethod,
-      purchasedDate: new Date()
+      setPaymentError(false)
+      
+      navigate('/success')
+    } catch (err) {
+      if(err instanceof zod.ZodError) {
+        return {
+          success: false,
+          errors: err.flatten()
+        }
+      } else {
+        throw err
+      }
     }
-
-
-    submitRequest(request)
-
-    navigate('/success')
   }
 
   return (
@@ -100,7 +117,7 @@ export const Checkout = () => {
                   className='cnb'
                   type="text"
                   placeholder='CEP'
-                  {...register('cep', { valueAsNumber: true })}
+                  {...register('cep')}
                 />
               </div>
               <div>
@@ -148,7 +165,7 @@ export const Checkout = () => {
             </S.AddressInputs>
           </S.Address>
 
-          <S.Payment>
+          <S.Payment className={paymentError ? 'error' : ''}>
             <S.PaymentHeader>
               <CurrencyDollarSimple size={22} />
               <div>
