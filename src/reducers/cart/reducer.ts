@@ -1,19 +1,34 @@
 import { produce } from "immer"
+import { api } from "../../services/api"
 import { ActionTypes } from "./actions"
 
 export type Coffee = {
   id: string
   title: string
-  imgUrl: string
+  imgUrl?: string
   price: number
   quantity: number
 }
 
-interface ICart {
+type Address = {
+  cep: number | undefined
+  rua: string
+  numero: string
+  complemento?: string
+  bairro: string
+  cidade: string
+  uf: string
+}
+
+export interface ICart {
+  id: number
   coffees: Coffee[]
+  address: Address
   totalCoffees: number
   deliveryCost: number
   totalPrice: number
+  paymentMethod: string
+  purchasedDate: Date
 }
 
 interface ICartState {
@@ -78,6 +93,24 @@ export const cartReducer = (state: ICartState, action: any) => {
         coffee!.quantity -= 1
         draft.cart.totalCoffees -= coffee!.price
         draft.cart.totalPrice -= coffee!.price
+      })
+    case ActionTypes.SUBMIT_REQUEST:
+      return produce(state, (draft) => {
+        const makeRequest = async () => {
+          const cart = action.payload.cart
+
+          await api.post('/requests', cart)
+
+          localStorage.removeItem('@ignite-coffee-delivery-state-1.0.0')
+        }
+
+        makeRequest()
+
+        draft.cart.coffees = []
+        draft.cart.deliveryCost = 0
+        draft.cart.totalCoffees = 0
+        draft.cart.totalPrice = 0
+
       })
     default:
       return state

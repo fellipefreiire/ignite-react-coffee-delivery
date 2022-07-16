@@ -6,33 +6,8 @@ import {
   useReducer,
   useState,
 } from 'react'
-import { addCoffeeFromCheckoutAction, addToCartAction, removeFromCartAction, subtractCoffeeFromCheckoutAction } from '../../reducers/cart/actions'
-import { cartReducer } from '../../reducers/cart/reducer'
-
-type Coffee = {
-  id: string
-  title: string
-  imgUrl: string
-  price: number
-  quantity: number
-}
-
-type Address = {
-  cep: string
-  rua: string
-  numero: string
-  complemento?: string
-  bairro: string
-  cidade: string
-  uf: string
-}
-
-interface ICart {
-  coffees: Coffee[]
-  totalCoffees: number
-  deliveryCost: number
-  totalPrice: number
-}
+import { addCoffeeFromCheckoutAction, addToCartAction, removeFromCartAction, submitRequestAction, subtractCoffeeFromCheckoutAction } from '../../reducers/cart/actions'
+import { cartReducer, Coffee, ICart } from '../../reducers/cart/reducer'
 
 interface ICartContext {
   cart: ICart
@@ -40,8 +15,7 @@ interface ICartContext {
   removeFromCart: (coffeeId: string) => void
   addCoffeeFromCheckout: (coffeeId: string) => void
   subtractCofeeFromCheckout: (coffeeId: string) => void
-  // address: Address
-  // paymentMethod: 'credito' | 'debito' | 'dinheiro'
+  submitRequest: (cart: ICart) => void
 }
 
 interface ICartContextProviderProps {
@@ -95,6 +69,10 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     dispatch(subtractCoffeeFromCheckoutAction(coffeeId))
   }
 
+  const submitRequest = (cart: ICart) => {
+    dispatch(submitRequestAction(cart))
+  }
+
   useEffect(() => {
     const stateJSON = JSON.stringify(cartState)
 
@@ -102,7 +80,7 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
   }, [cartState])
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout, submitRequest }}>
       {children}
     </CartContext.Provider>
   )
