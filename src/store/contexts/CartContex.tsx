@@ -6,7 +6,7 @@ import {
   useReducer,
   useState,
 } from 'react'
-import { addCoffeeFromCheckoutAction, addToCartAction, removeFromCartAction, submitRequestAction, subtractCoffeeFromCheckoutAction } from '../../reducers/cart/actions'
+import { addCoffeeFromCheckoutAction, addToCartAction, clearStateAndLocalStorageAction, paymentMethodAction, removeFromCartAction, submitRequestAction, subtractCoffeeFromCheckoutAction } from '../../reducers/cart/actions'
 import { cartReducer, Coffee, ICart } from '../../reducers/cart/reducer'
 
 interface ICartContext {
@@ -16,6 +16,8 @@ interface ICartContext {
   addCoffeeFromCheckout: (coffeeId: string) => void
   subtractCofeeFromCheckout: (coffeeId: string) => void
   submitRequest: (cart: ICart) => void
+  clearStateAndLocalStorage: () => void
+  setPaymentMethod: (paymentMethod: string) => void
 }
 
 interface ICartContextProviderProps {
@@ -24,15 +26,29 @@ interface ICartContextProviderProps {
 
 const CartContext = createContext({} as ICartContext)
 
-export const CartContextProvider = ({ children }: ICartContextProviderProps) => {
-  const cartInit = {
-    cart: {
-      coffees: [],
-      totalCoffees: 0,
-      deliveryCost: 0,
-      totalPrice: 0
-    }
+export const cartInit = {
+  cart: {
+    id: undefined,
+    coffees: [],
+    address: {
+      bairro: '',
+      cep: '',
+      cidade: '',
+      numero: '',
+      rua: '',
+      uf: '',
+      complemento: ''
+    },
+    totalCoffees: 0,
+    deliveryCost: 0,
+    totalPrice: 0,
+    paymentMethod: '',
+    purchasedDate: undefined
   }
+}
+
+export const CartContextProvider = ({ children }: ICartContextProviderProps) => {
+  
   const [cartState, dispatch] = useReducer(
     cartReducer,
     {
@@ -73,6 +89,14 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
     dispatch(submitRequestAction(cart))
   }
 
+  const clearStateAndLocalStorage = () => {
+    dispatch(clearStateAndLocalStorageAction())
+  }
+
+  const setPaymentMethod = (paymentMethod: string) => {
+    dispatch(paymentMethodAction(paymentMethod))
+  }
+
   useEffect(() => {
     const stateJSON = JSON.stringify(cartState)
 
@@ -80,7 +104,7 @@ export const CartContextProvider = ({ children }: ICartContextProviderProps) => 
   }, [cartState])
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout, submitRequest }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout, submitRequest, clearStateAndLocalStorage, setPaymentMethod }}>
       {children}
     </CartContext.Provider>
   )
