@@ -1,6 +1,6 @@
-import { Bank, CreditCard, CurrencyDollarSimple, MapPinLine, Minus, Money, Plus, Trash } from 'phosphor-react'
+import { Minus, Plus, Trash } from 'phosphor-react'
 import { useState } from 'react'
-import { useForm, useFormContext } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useCart } from '../../store/contexts/CartContex'
 import { formatCurrency } from '../../utils/formatCurrency'
 import * as zod from 'zod'
@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import * as S from './styles'
 import { useNavigate } from 'react-router-dom'
+import { Address } from './components/Address'
+import { Payment } from './components/Payment'
 
 const cartFormValidationSchema = zod.object({
   cep: zod.string().min(8, 'O CEP é obrigatório'),
@@ -53,11 +55,11 @@ export const Checkout = () => {
     },
   })
 
-  const { handleSubmit, register, watch, reset } = cartForm
+  const { handleSubmit } = cartForm
 
   const handleSumbitCart = (data: CartFormData) => {
     try {
-      if (paymentMethod === '') {
+      if (cart.paymentMethod === '') {
         setPaymentError(true)
         return
       }
@@ -69,7 +71,7 @@ export const Checkout = () => {
           quantity: coffee.quantity,
         }
       })
-  
+
       const request = {
         id: new Date().getTime(),
         coffees: coffees,
@@ -80,14 +82,14 @@ export const Checkout = () => {
         paymentMethod,
         purchasedDate: new Date()
       }
-  
+
       submitRequest(request)
 
       setPaymentError(false)
-      
+
       navigate('/success')
     } catch (err) {
-      if(err instanceof zod.ZodError) {
+      if (err instanceof zod.ZodError) {
         return {
           success: false,
           errors: err.flatten()
@@ -103,103 +105,10 @@ export const Checkout = () => {
       <form onSubmit={handleSubmit(handleSumbitCart)}>
         <S.Request>
           <h1>Complete seu pedido</h1>
-          <S.Address>
-            <S.AddressHeader>
-              <MapPinLine size={22} />
-              <div>
-                <S.RequestSubtitle>Endereço de Entrega</S.RequestSubtitle>
-                <S.RequestText>Informe o endereço onde deseja receber seu pedido</S.RequestText>
-              </div>
-            </S.AddressHeader>
-            <S.AddressInputs>
-              <div>
-                <input
-                  className='cnb'
-                  type="text"
-                  placeholder='CEP'
-                  {...register('cep')}
-                />
-              </div>
-              <div>
-                <input
-                  className='full'
-                  type="text"
-                  placeholder='Rua'
-                  {...register('rua')}
-                />
-              </div>
-              <div>
-                <input
-                  className='cnb'
-                  type="text"
-                  placeholder='Número'
-                  {...register('numero')}
-                />
-                <input
-                  className='full'
-                  type="text"
-                  placeholder='Complemento'
-                  {...register('complemento')}
-                />
-              </div>
-              <div>
-                <input
-                  className='cnb'
-                  type="text"
-                  placeholder='Bairro'
-                  {...register('bairro')}
-                />
-                <input
-                  className='full'
-                  type="text"
-                  placeholder='Cidade'
-                  {...register('cidade')}
-                />
-                <input
-                  className='uf'
-                  type="text"
-                  placeholder='UF'
-                  {...register('uf')}
-                />
-              </div>
-            </S.AddressInputs>
-          </S.Address>
-
-          <S.Payment className={paymentError ? 'error' : ''}>
-            <S.PaymentHeader>
-              <CurrencyDollarSimple size={22} />
-              <div>
-                <S.RequestSubtitle>Pagamento</S.RequestSubtitle>
-                <S.RequestText>O pagamento é feito na entrega. Escolha a forma que deseja pagar</S.RequestText>
-              </div>
-            </S.PaymentHeader>
-            <S.PaymentWrapper>
-              <S.PaymentCard
-                className={paymentMethod === 'credito' ? 'active' : ''}
-                onClick={() => setPaymentMethod('credito')}
-                type='button'
-              >
-                <CreditCard />
-                <span>Cartão de crédito</span>
-              </S.PaymentCard>
-              <S.PaymentCard
-                className={paymentMethod === 'debito' ? 'active' : ''}
-                onClick={() => setPaymentMethod('debito')}
-                type='button'
-              >
-                <Bank />
-                <span>Cartão de débito</span>
-              </S.PaymentCard>
-              <S.PaymentCard
-                className={paymentMethod === 'dinheiro' ? 'active' : ''}
-                onClick={() => setPaymentMethod('dinheiro')}
-                type='button'
-              >
-                <Money />
-                <span>Dinheiro</span>
-              </S.PaymentCard>
-            </S.PaymentWrapper>
-          </S.Payment>
+          <FormProvider {...cartForm}>
+            <Address />
+          </FormProvider>
+          <Payment paymentError={paymentError} />
         </S.Request>
 
         <S.SelectedCoffees>
