@@ -1,5 +1,6 @@
 import { produce } from "immer"
 import { api } from "../../services/api"
+import { cartInit } from "../../store/contexts/CartContex"
 import { ActionTypes } from "./actions"
 
 export type Coffee = {
@@ -21,14 +22,14 @@ type Address = {
 }
 
 export interface ICart {
-  id: number
+  id: number | undefined
   coffees: Coffee[]
   address: Address
   totalCoffees: number
   deliveryCost: number
   totalPrice: number
   paymentMethod: string
-  purchasedDate: Date
+  purchasedDate: Date | undefined
 }
 
 interface ICartState {
@@ -96,21 +97,26 @@ export const cartReducer = (state: ICartState, action: any) => {
       })
     case ActionTypes.SUBMIT_REQUEST:
       return produce(state, (draft) => {
+        const cart = action.payload.cart
+
+        draft.cart.address = cart.address
+        draft.cart.paymentMethod = cart.paymentMethod
+
         const makeRequest = async () => {
-          const cart = action.payload.cart
-
           await api.post('/requests', cart)
-
-          localStorage.removeItem('@ignite-coffee-delivery-state-1.0.0')
         }
 
         makeRequest()
+      })
+    case ActionTypes.CLEAR_STATE_AND_LOCAL_STORAGE:
+      return produce(state, (draft) => {
+        draft.cart = cartInit.cart
 
-        draft.cart.coffees = []
-        draft.cart.deliveryCost = 0
-        draft.cart.totalCoffees = 0
-        draft.cart.totalPrice = 0
-
+        localStorage.removeItem('@ignite-coffee-delivery-state-1.0.0')
+      })
+    case ActionTypes.PAYMENT_METHOD:
+      return produce(state, (draft) => {
+        draft.cart.paymentMethod = action.payload.paymentMethod
       })
     default:
       return state

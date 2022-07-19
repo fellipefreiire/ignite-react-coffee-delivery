@@ -5,7 +5,9 @@ export enum ActionTypes {
   REMOVE_FROM_CART = 'REMOVE_FROM_CART',
   ADD_COFFEE_FROM_CHECKOUT = 'ADD_COFFEE_FROM_CHECKOUT',
   SUBTRACT_COFFEE_FROM_CHECKOUT = 'SUBTRACT_COFFEE_FROM_CHECKOUT',
-  SUBMIT_REQUEST = 'SUBMIT_REQUEST'
+  SUBMIT_REQUEST = 'SUBMIT_REQUEST',
+  CLEAR_STATE_AND_LOCAL_STORAGE = 'CLEAR_STATE_AND_LOCAL_STORAGE',
+  PAYMENT_METHOD = 'PAYMENT_METHOD'
 }
 
 export const addToCartAction = (newCoffee: Coffee) => {
@@ -49,6 +51,22 @@ export const submitRequestAction = (cart: ICart) => {
     type: ActionTypes.SUBMIT_REQUEST,
     payload: {
       cart
+    }
+  }
+}
+
+export const clearStateAndLocalStorageAction = () => {
+  return {
+    type: ActionTypes.CLEAR_STATE_AND_LOCAL_STORAGE,
+    payload: {}
+  }
+}
+
+export const paymentMethodAction = (paymentMethod: string) => {
+  return {
+    type: ActionTypes.PAYMENT_METHOD,
+    payload: {
+      paymentMethod
     }
   }
 }
