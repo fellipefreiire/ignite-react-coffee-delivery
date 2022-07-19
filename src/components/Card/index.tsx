@@ -1,6 +1,7 @@
 import { ShoppingCart, Minus, Plus } from 'phosphor-react'
 import { useState } from 'react'
-import { useCart } from '../../store/contexts/CartContex'
+import { useCart } from '../../store/zustand/CartStore'
+// import { useCart } from '../../store/contexts/CartContex'
 import { formatCurrency } from '../../utils/formatCurrency'
 
 import * as S from './styles'
@@ -24,7 +25,8 @@ export const Card = ({
 }: ICardProps) => {
   const [coffeeQuantity, setCoffeeQuantity] = useState(0)
 
-  const { addToCart } = useCart()
+  // const { addToCart } = useCart()
+  const addToCart = useCart(s => s.addToCart)
 
   const handleAddCoffeeQuantity = () => {
     setCoffeeQuantity(prev => prev + 1)

@@ -257,6 +257,31 @@
       "totalPrice": 13.4,
       "paymentMethod": "credito",
       "purchasedDate": "2022-07-16T23:48:59.987Z"
+    },
+    {
+      "id": 1658197647822,
+      "coffees": [
+        {
+          "id": "1",
+          "title": "Expresso Tradicional",
+          "price": 9.9,
+          "quantity": 2
+        }
+      ],
+      "address": {
+        "cep": "55555555",
+        "rua": "rua",
+        "numero": "numero",
+        "complemento": "complemento",
+        "bairro": "bairro",
+        "cidade": "cidade",
+        "uf": "UF"
+      },
+      "totalCoffees": 19.8,
+      "deliveryCost": 3.5,
+      "totalPrice": 23.3,
+      "paymentMethod": "",
+      "purchasedDate": "2022-07-19T02:27:27.822Z"
     }
   ]
 }

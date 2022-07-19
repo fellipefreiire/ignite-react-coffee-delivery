@@ -2,12 +2,15 @@ import { MapPin, ShoppingCart } from 'phosphor-react'
 import { NavLink } from 'react-router-dom'
 
 import logo from '../../assets/logo.svg'
-import { useCart } from '../../store/contexts/CartContex'
+import { useCart } from '../../store/zustand/CartStore'
+// import { useCart } from '../../store/contexts/CartContex'
 
 import * as S from './styles'
 
 export const Header = () => {
-  const { cart } = useCart()
+  // const { cart } = useCart()
+  const cart = useCart(s => s.cart)
+  
   const coffeesQuantity = cart.coffees.length
 
   const dataObj = {

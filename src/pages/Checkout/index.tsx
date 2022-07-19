@@ -1,7 +1,7 @@
 import { Minus, Plus, Trash } from 'phosphor-react'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { useCart } from '../../store/contexts/CartContex'
+// import { useCart } from '../../store/contexts/CartContex'
 import { formatCurrency } from '../../utils/formatCurrency'
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,6 +10,7 @@ import * as S from './styles'
 import { useNavigate } from 'react-router-dom'
 import { Address } from './components/Address'
 import { Payment } from './components/Payment'
+import { useCart } from '../../store/zustand/CartStore'
 
 const cartFormValidationSchema = zod.object({
   cep: zod.string().min(8, 'O CEP é obrigatório'),
@@ -28,7 +29,13 @@ export const Checkout = () => {
   const [paymentError, setPaymentError] = useState(false)
   const navigate = useNavigate()
 
-  const { cart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout, submitRequest } = useCart()
+  // const { cart, removeFromCart, addCoffeeFromCheckout, subtractCofeeFromCheckout, submitRequest } = useCart()
+
+  const cart = useCart(s => s.cart)
+  const removeFromCart = useCart(s => s.removeFromCart)
+  const addCoffeeFromCheckout = useCart(s => s.addCoffeeFromCheckout)
+  const subtractCofeeFromCheckout = useCart(s => s.subtractCofeeFromCheckout)
+  const submitRequest = useCart(s => s.submitRequest)
 
   const handleRemoveCoffeeFromCart = (coffeeId: string) => {
     removeFromCart(coffeeId)

@@ -2,7 +2,8 @@ import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 
 import illustration from '../../assets/Illustration.png'
-import { useCart } from '../../store/contexts/CartContex'
+import { useCart } from '../../store/zustand/CartStore'
+// import { useCart } from '../../store/contexts/CartContex'
 
 import * as S from './styles'
 
@@ -17,9 +18,12 @@ type Address = {
 }
 
 export const Success = () => {
-  const { cart, clearStateAndLocalStorage } = useCart()
+  // const { cart, clearStateAndLocalStorage } = useCart()
   const [address, setAddress] = useState<Address>()
   const [paymentMethod, setPaymentMethod] = useState('')
+
+  const cart = useCart(s => s.cart)
+  const clearStateAndLocalStorage = useCart(s => s.clearStateAndLocalStorage)
 
   useEffect(() => {
     setAddress(cart.address)

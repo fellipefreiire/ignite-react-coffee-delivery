@@ -1,5 +1,6 @@
 import { Bank, CreditCard, CurrencyDollarSimple, Money } from 'phosphor-react'
-import { useCart } from '../../../../store/contexts/CartContex'
+import { useCart } from '../../../../store/zustand/CartStore'
+// import { useCart } from '../../../../store/contexts/CartContex'
 import * as S from './styles'
 
 interface IPaymentProps {
@@ -7,7 +8,10 @@ interface IPaymentProps {
 }
 
 export const Payment = ({ paymentError }: IPaymentProps) => {
-  const { cart, setPaymentMethod } = useCart()
+  // const { cart, setPaymentMethod } = useCart()
+
+  const cart = useCart((s) => s.cart)
+  const setPaymentMethod = useCart((s) => s.setPaymentMethod)
 
   return (
     <S.Payment className={paymentError ? 'error' : ''}>
